@@ -13,7 +13,6 @@
 <body>
 
 <c:import url="cabecalho.jsp" />
-<jsp:useBean id="dao" class="br.com.caelum.agenda.dao.ContatoDao" />
 
 <main class="container">
 
@@ -30,7 +29,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="contato" items="${dao.lista}">
+		<c:forEach var="contato" items="${listaContatos}">
 		<tr>
 			<td>${contato.id}</td>
 			<td>${contato.nome}</td>

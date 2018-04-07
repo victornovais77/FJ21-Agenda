@@ -1,20 +1,18 @@
-package br.com.caelum.servlet;
+package br.com.caelum.logica;
 
 import br.com.caelum.agenda.dao.ContatoDao;
 import br.com.caelum.agenda.modelo.Contato;
+import br.com.caelum.logica.Logica;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-@WebServlet("/salvaContato")
-public class SalvarContatoServlet extends HttpServlet {
+public class AdicionaContato implements Logica {
 
-	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+	public String executa(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
 			String nome = request.getParameter("nome");
@@ -35,15 +33,12 @@ public class SalvarContatoServlet extends HttpServlet {
 
 			ContatoDao dao = new ContatoDao();
 			dao.adiciona(contato);
+			
+			return "contato-cadastrado.jsp";
 
-			PrintWriter pw = response.getWriter();
-			
-			pw.println("<html><body><h1>");
-			pw.println("Contato: " + contato.getNome() + " salvo com sucesso!");
-			pw.println("</h1></body></html>");
-			
 		} catch (ParseException e) {
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 
 

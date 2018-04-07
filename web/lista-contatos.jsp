@@ -12,6 +12,7 @@
 </head>
 <body>
 
+<c:import url="cabecalho.jsp" />
 <jsp:useBean id="dao" class="br.com.caelum.agenda.dao.ContatoDao" />
 
 <main class="container">
@@ -33,10 +34,18 @@
 		<tr>
 			<td>${contato.id}</td>
 			<td>${contato.nome}</td>
-			<td>${contato.email}</td>
+			<td>
+				<c:choose>
+					<c:when test="${empty contato.email}">
+						Não tem email cadastrado!
+					</c:when>
+					<c:otherwise>
+						<a href="mailTo:${contato.email}">${contato.email}</a>
+					</c:otherwise>
+				</c:choose>
+			</td>
 			<td>${contato.endereco}</td>
 			<td><fmt:formatDate value="${contato.dataNascimento.time}" pattern="dd/MM/yyyy" /></td>
-			
 		</tr>
 		</c:forEach>
 	</tbody>
